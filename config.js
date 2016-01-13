@@ -13,7 +13,7 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
   bundles: {
-    "build.js": [
+    "build/main.bundle.js": [
       "lib/main.js",
       "lib/bootstrap.js",
       "npm:incremental-dom@0.3.0",

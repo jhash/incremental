@@ -11,6 +11,9 @@
     }
   },
   "devDependencies": {
+    "gulp-batch": "^1.0.5",
+    "gulp-plumber": "^1.0.1",
+    "gulp-watch": "^4.3.5",
     "jspm": "^0.16.21"
   }
 }
