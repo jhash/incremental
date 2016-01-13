@@ -4996,7 +4996,7 @@ System.register('lib/component.js', ['npm:babel-runtime@5.8.34/helpers/create-cl
         function Component(spec) {
           _classCallCheck(this, Component);
 
-          _Object$assign(this, spec);
+          if (spec) _Object$assign(this, spec);
         }
 
         _createClass(Component, [{
@@ -5699,19 +5699,13 @@ System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js'], fun
 
   _export('render', render);
 
-  function render(tag) {
-    if (!tag) return;
-
-    var tagType = tag.type || 'div';
-
-    elementOpenStart(tagType, _.get(tag, 'id', null), _.get(tag, 'staticPropertyArray', null));
-
-    _.each(tag.props, function (prop, key) {
-      attr(key, prop);
+  function renderChildComponents(tag) {
+    _.each(tag.children, function (child) {
+      render(child);
     });
+  }
 
-    elementOpenEnd(tagType);
-
+  function renderTextAndChildren(tag) {
     var tagProps = tag.props,
         tagText = _.get(tagProps, 'textBefore') || _.get(tagProps, 'text'),
         tagTextFormatter = _.get(tagProps, 'textFormatter', function (str) {
@@ -5722,15 +5716,31 @@ System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js'], fun
     };
 
     if (_.isString(tagText)) text(formatText(tagText, tagProps), tagTextFormatterWrapper);
-    console.log(tagText, tagProps);
 
-    _.each(tag.children, function (child) {
-      render(child);
-    });
+    renderChildComponents(tag);
 
     tagText = _.get(tagProps, 'textAfter');
     if (_.isString(tagText)) text(formatText(tagText, tagProps), tagTextFormatterWrapper);
-    console.log(tagText, tagProps);
+  }
+
+  function openElement(tag, tagType) {
+    elementOpenStart(tagType, _.get(tag, 'id', null), _.get(tag, 'staticPropertyArray', null));
+
+    _.each(tag.props, function (prop, key) {
+      attr(key, prop);
+    });
+
+    elementOpenEnd(tagType);
+  }
+
+  function render(tag) {
+    if (!tag) return;
+
+    var tagType = tag.type || 'div';
+
+    openElement(tag, tagType);
+
+    renderTextAndChildren(tag);
 
     elementClose(tagType);
   }
