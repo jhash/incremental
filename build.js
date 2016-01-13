@@ -4340,51 +4340,718 @@ System.register('lib/bootstrap.js', ['npm:lodash@3.10.1'], function (_export) {
     execute: function () {}
   };
 });
-System.register('lib/header.js', ['lib/jdom.js'], function (_export) {
-  'use strict';
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-iobject", ["npm:core-js@1.2.6/library/modules/$.iobject", "npm:core-js@1.2.6/library/modules/$.defined"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var IObject = $__require('npm:core-js@1.2.6/library/modules/$.iobject'),
+      defined = $__require('npm:core-js@1.2.6/library/modules/$.defined');
+  module.exports = function(it) {
+    return IObject(defined(it));
+  };
+  global.define = __define;
+  return module.exports;
+});
 
-  var render, value, tag;
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-sap", ["npm:core-js@1.2.6/library/modules/$.export", "npm:core-js@1.2.6/library/modules/$.core", "npm:core-js@1.2.6/library/modules/$.fails"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export'),
+      core = $__require('npm:core-js@1.2.6/library/modules/$.core'),
+      fails = $__require('npm:core-js@1.2.6/library/modules/$.fails');
+  module.exports = function(KEY, exec) {
+    var fn = (core.Object || {})[KEY] || Object[KEY],
+        exp = {};
+    exp[KEY] = exec(fn);
+    $export($export.S + $export.F * fails(function() {
+      fn(1);
+    }), 'Object', exp);
+  };
+  global.define = __define;
+  return module.exports;
+});
 
-  _export('header', header);
+System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor", ["npm:core-js@1.2.6/library/modules/$.to-iobject", "npm:core-js@1.2.6/library/modules/$.object-sap"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject');
+  $__require('npm:core-js@1.2.6/library/modules/$.object-sap')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+    return function getOwnPropertyDescriptor(it, key) {
+      return $getOwnPropertyDescriptor(toIObject(it), key);
+    };
+  });
+  global.define = __define;
+  return module.exports;
+});
 
-  function onClick() {
-    console.log('Hey there');
-    value++;
-    console.log(value);
-  }
+System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = $__require('npm:core-js@1.2.6/library/modules/$');
+  $__require('npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor');
+  module.exports = function getOwnPropertyDescriptor(it, key) {
+    return $.getDesc(it, key);
+  };
+  global.define = __define;
+  return module.exports;
+});
 
-  function header() {
-    render(tag);
-  }
+System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/get-own-property-descriptor", ["npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": $__require('npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/helpers/get", ["npm:babel-runtime@5.8.34/core-js/object/get-own-property-descriptor"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _Object$getOwnPropertyDescriptor = $__require('npm:babel-runtime@5.8.34/core-js/object/get-own-property-descriptor')["default"];
+  exports["default"] = function get(_x, _x2, _x3) {
+    var _again = true;
+    _function: while (_again) {
+      var object = _x,
+          property = _x2,
+          receiver = _x3;
+      _again = false;
+      if (object === null)
+        object = Function.prototype;
+      var desc = _Object$getOwnPropertyDescriptor(object, property);
+      if (desc === undefined) {
+        var parent = Object.getPrototypeOf(object);
+        if (parent === null) {
+          return undefined;
+        } else {
+          _x = parent;
+          _x2 = property;
+          _x3 = receiver;
+          _again = true;
+          desc = parent = undefined;
+          continue _function;
+        }
+      } else if ("value" in desc) {
+        return desc.value;
+      } else {
+        var getter = desc.get;
+        if (getter === undefined) {
+          return undefined;
+        }
+        return getter.call(receiver);
+      }
+    }
+  };
+  exports.__esModule = true;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/fn/object/create", ["npm:core-js@1.2.6/library/modules/$"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = $__require('npm:core-js@1.2.6/library/modules/$');
+  module.exports = function create(P, D) {
+    return $.create(P, D);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/create", ["npm:core-js@1.2.6/library/fn/object/create"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": $__require('npm:core-js@1.2.6/library/fn/object/create'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    return typeof it === 'object' ? it !== null : typeof it === 'function';
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object", ["npm:core-js@1.2.6/library/modules/$.is-object"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object');
+  module.exports = function(it) {
+    if (!isObject(it))
+      throw TypeError(it + ' is not an object!');
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.is-object", "npm:core-js@1.2.6/library/modules/$.an-object", "npm:core-js@1.2.6/library/modules/$.ctx"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var getDesc = $__require('npm:core-js@1.2.6/library/modules/$').getDesc,
+      isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object'),
+      anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object');
+  var check = function(O, proto) {
+    anObject(O);
+    if (!isObject(proto) && proto !== null)
+      throw TypeError(proto + ": can't set as prototype!");
+  };
+  module.exports = {
+    set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
+      try {
+        set = $__require('npm:core-js@1.2.6/library/modules/$.ctx')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) {
+        buggy = true;
+      }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy)
+          O.__proto__ = proto;
+        else
+          set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+    check: check
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of", ["npm:core-js@1.2.6/library/modules/$.export", "npm:core-js@1.2.6/library/modules/$.set-proto"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('npm:core-js@1.2.6/library/modules/$.set-proto').set});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/fn/object/set-prototype-of", ["npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of", "npm:core-js@1.2.6/library/modules/$.core"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  $__require('npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of');
+  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core').Object.setPrototypeOf;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/set-prototype-of", ["npm:core-js@1.2.6/library/fn/object/set-prototype-of"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": $__require('npm:core-js@1.2.6/library/fn/object/set-prototype-of'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/helpers/inherits", ["npm:babel-runtime@5.8.34/core-js/object/create", "npm:babel-runtime@5.8.34/core-js/object/set-prototype-of"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _Object$create = $__require('npm:babel-runtime@5.8.34/core-js/object/create')["default"];
+  var _Object$setPrototypeOf = $__require('npm:babel-runtime@5.8.34/core-js/object/set-prototype-of')["default"];
+  exports["default"] = function(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+    subClass.prototype = _Object$create(superClass && superClass.prototype, {constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }});
+    if (superClass)
+      _Object$setPrototypeOf ? _Object$setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  };
+  exports.__esModule = true;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/fn/object/define-property", ["npm:core-js@1.2.6/library/modules/$"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = $__require('npm:core-js@1.2.6/library/modules/$');
+  module.exports = function defineProperty(it, key, desc) {
+    return $.setDesc(it, key, desc);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/define-property", ["npm:core-js@1.2.6/library/fn/object/define-property"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": $__require('npm:core-js@1.2.6/library/fn/object/define-property'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/helpers/create-class", ["npm:babel-runtime@5.8.34/core-js/object/define-property"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var _Object$defineProperty = $__require('npm:babel-runtime@5.8.34/core-js/object/define-property')["default"];
+  exports["default"] = (function() {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor)
+          descriptor.writable = true;
+        _Object$defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+    return function(Constructor, protoProps, staticProps) {
+      if (protoProps)
+        defineProperties(Constructor.prototype, protoProps);
+      if (staticProps)
+        defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  })();
+  exports.__esModule = true;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/helpers/class-call-check", [], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  exports["default"] = function(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  };
+  exports.__esModule = true;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var global = module.exports = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+  if (typeof __g == 'number')
+    __g = global;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    if (typeof it != 'function')
+      throw TypeError(it + ' is not a function!');
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx", ["npm:core-js@1.2.6/library/modules/$.a-function"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function');
+  module.exports = function(fn, that, length) {
+    aFunction(fn);
+    if (that === undefined)
+      return fn;
+    switch (length) {
+      case 1:
+        return function(a) {
+          return fn.call(that, a);
+        };
+      case 2:
+        return function(a, b) {
+          return fn.call(that, a, b);
+        };
+      case 3:
+        return function(a, b, c) {
+          return fn.call(that, a, b, c);
+        };
+    }
+    return function() {
+      return fn.apply(that, arguments);
+    };
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export", ["npm:core-js@1.2.6/library/modules/$.global", "npm:core-js@1.2.6/library/modules/$.core", "npm:core-js@1.2.6/library/modules/$.ctx"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var global = $__require('npm:core-js@1.2.6/library/modules/$.global'),
+      core = $__require('npm:core-js@1.2.6/library/modules/$.core'),
+      ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx'),
+      PROTOTYPE = 'prototype';
+  var $export = function(type, name, source) {
+    var IS_FORCED = type & $export.F,
+        IS_GLOBAL = type & $export.G,
+        IS_STATIC = type & $export.S,
+        IS_PROTO = type & $export.P,
+        IS_BIND = type & $export.B,
+        IS_WRAP = type & $export.W,
+        exports = IS_GLOBAL ? core : core[name] || (core[name] = {}),
+        target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE],
+        key,
+        own,
+        out;
+    if (IS_GLOBAL)
+      source = name;
+    for (key in source) {
+      own = !IS_FORCED && target && key in target;
+      if (own && key in exports)
+        continue;
+      out = own ? target[key] : source[key];
+      exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key] : IS_BIND && own ? ctx(out, global) : IS_WRAP && target[key] == out ? (function(C) {
+        var F = function(param) {
+          return this instanceof C ? new C(param) : C(param);
+        };
+        F[PROTOTYPE] = C[PROTOTYPE];
+        return F;
+      })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+      if (IS_PROTO)
+        (exports[PROTOTYPE] || (exports[PROTOTYPE] = {}))[key] = out;
+    }
+  };
+  $export.F = 1;
+  $export.G = 2;
+  $export.S = 4;
+  $export.P = 8;
+  $export.B = 16;
+  $export.W = 32;
+  module.exports = $export;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $Object = Object;
+  module.exports = {
+    create: $Object.create,
+    getProto: $Object.getPrototypeOf,
+    isEnum: {}.propertyIsEnumerable,
+    getDesc: $Object.getOwnPropertyDescriptor,
+    setDesc: $Object.defineProperty,
+    setDescs: $Object.defineProperties,
+    getKeys: $Object.keys,
+    getNames: $Object.getOwnPropertyNames,
+    getSymbols: $Object.getOwnPropertySymbols,
+    each: [].forEach
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(it) {
+    if (it == undefined)
+      throw TypeError("Can't call method on  " + it);
+    return it;
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-object", ["npm:core-js@1.2.6/library/modules/$.defined"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var defined = $__require('npm:core-js@1.2.6/library/modules/$.defined');
+  module.exports = function(it) {
+    return Object(defined(it));
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var toString = {}.toString;
+  module.exports = function(it) {
+    return toString.call(it).slice(8, -1);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iobject", ["npm:core-js@1.2.6/library/modules/$.cof"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof');
+  module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
+    return cof(it) == 'String' ? it.split('') : Object(it);
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = function(exec) {
+    try {
+      return !!exec();
+    } catch (e) {
+      return true;
+    }
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-assign", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.to-object", "npm:core-js@1.2.6/library/modules/$.iobject", "npm:core-js@1.2.6/library/modules/$.fails"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $ = $__require('npm:core-js@1.2.6/library/modules/$'),
+      toObject = $__require('npm:core-js@1.2.6/library/modules/$.to-object'),
+      IObject = $__require('npm:core-js@1.2.6/library/modules/$.iobject');
+  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.fails')(function() {
+    var a = Object.assign,
+        A = {},
+        B = {},
+        S = Symbol(),
+        K = 'abcdefghijklmnopqrst';
+    A[S] = 7;
+    K.split('').forEach(function(k) {
+      B[k] = k;
+    });
+    return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+  }) ? function assign(target, source) {
+    var T = toObject(target),
+        $$ = arguments,
+        $$len = $$.length,
+        index = 1,
+        getKeys = $.getKeys,
+        getSymbols = $.getSymbols,
+        isEnum = $.isEnum;
+    while ($$len > index) {
+      var S = IObject($$[index++]),
+          keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S),
+          length = keys.length,
+          j = 0,
+          key;
+      while (length > j)
+        if (isEnum.call(S, key = keys[j++]))
+          T[key] = S[key];
+    }
+    return T;
+  } : Object.assign;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.assign", ["npm:core-js@1.2.6/library/modules/$.export", "npm:core-js@1.2.6/library/modules/$.object-assign"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export');
+  $export($export.S + $export.F, 'Object', {assign: $__require('npm:core-js@1.2.6/library/modules/$.object-assign')});
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core", [], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  var core = module.exports = {version: '1.2.6'};
+  if (typeof __e == 'number')
+    __e = core;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:core-js@1.2.6/library/fn/object/assign", ["npm:core-js@1.2.6/library/modules/es6.object.assign", "npm:core-js@1.2.6/library/modules/$.core"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  $__require('npm:core-js@1.2.6/library/modules/es6.object.assign');
+  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core').Object.assign;
+  global.define = __define;
+  return module.exports;
+});
+
+System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/assign", ["npm:core-js@1.2.6/library/fn/object/assign"], true, function($__require, exports, module) {
+  ;
+  var global = this,
+      __define = global.define;
+  global.define = undefined;
+  module.exports = {
+    "default": $__require('npm:core-js@1.2.6/library/fn/object/assign'),
+    __esModule: true
+  };
+  global.define = __define;
+  return module.exports;
+});
+
+System.register('lib/component.js', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/object/assign', 'npm:incremental-dom@0.3.0', 'lib/jdom.js'], function (_export) {
+  var _createClass, _classCallCheck, _Object$assign, patch, _render, Component;
 
   return {
-    setters: [function (_libJdomJs) {
-      render = _libJdomJs.render;
+    setters: [function (_npmBabelRuntime5834HelpersCreateClass) {
+      _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
+    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
+      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
+    }, function (_npmBabelRuntime5834CoreJsObjectAssign) {
+      _Object$assign = _npmBabelRuntime5834CoreJsObjectAssign['default'];
+    }, function (_npmIncrementalDom030) {
+      patch = _npmIncrementalDom030.patch;
+    }, function (_libJdomJs) {
+      _render = _libJdomJs.render;
     }],
     execute: function () {
-      value = 0;
-      tag = {
-        type: 'div',
-        id: 'header',
-        staticPropertyArray: [],
-        props: {
-          onclick: onClick,
-          value: value,
-          textBefore: 'Hello there'
-        },
-        children: [{
-          type: 'h2',
-          props: {
-            text: 'Sir testerson'
-          },
-          children: [{
-            type: 'div',
-            props: {
-              text: 'Testing'
+      'use strict';
+
+      Component = (function () {
+        function Component(spec) {
+          _classCallCheck(this, Component);
+
+          _Object$assign(this, spec);
+        }
+
+        _createClass(Component, [{
+          key: 'render',
+          value: function render() {
+            if (this.container) {
+              patch(this.container, _render.bind(this, this));
+            } else {
+              _render(this);
             }
-          }]
-        }]
-      };
+          }
+        }, {
+          key: 'renderTo',
+          value: function renderTo(container) {
+            this.container = container;
+            this.render();
+          }
+        }]);
+
+        return Component;
+      })();
+
+      _export('Component', Component);
+    }
+  };
+});
+System.register('lib/header.js', ['npm:babel-runtime@5.8.34/helpers/get', 'npm:babel-runtime@5.8.34/helpers/inherits', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'lib/component.js'], function (_export) {
+  var _get, _inherits, _classCallCheck, Component, Header;
+
+  return {
+    setters: [function (_npmBabelRuntime5834HelpersGet) {
+      _get = _npmBabelRuntime5834HelpersGet['default'];
+    }, function (_npmBabelRuntime5834HelpersInherits) {
+      _inherits = _npmBabelRuntime5834HelpersInherits['default'];
+    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
+      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
+    }, function (_libComponentJs) {
+      Component = _libComponentJs.Component;
+    }],
+    execute: function () {
+      'use strict';
+
+      Header = (function (_Component) {
+        _inherits(Header, _Component);
+
+        function Header() {
+          _classCallCheck(this, Header);
+
+          _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
+        }
+
+        return Header;
+      })(Component);
+
+      _export('Header', Header);
     }
   };
 });
@@ -5025,17 +5692,12 @@ System.registerDynamic("npm:incremental-dom@0.3.0", ["npm:incremental-dom@0.3.0/
   return module.exports;
 });
 
-System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0'], function (_export) {
+System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js'], function (_export) {
   'use strict';
 
-  var elementOpenStart, elementOpenEnd, attr, elementClose, text, attributes;
+  var elementOpenStart, elementOpenEnd, attr, elementClose, text, attributes, formatText;
 
   _export('render', render);
-
-  function defaultTextFormatter(str) {
-    // TODO - localize here
-    return str;
-  }
 
   function render(tag) {
     if (!tag) return;
@@ -5050,17 +5712,25 @@ System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0'], function (_export)
 
     elementOpenEnd(tagType);
 
-    var tagText = _.get(tag, 'props.textBefore') || _.get(tag, 'props.text'),
-        tagTextFormatter = _.get(tag, 'props.textFormatter', defaultTextFormatter);
+    var tagProps = tag.props,
+        tagText = _.get(tagProps, 'textBefore') || _.get(tagProps, 'text'),
+        tagTextFormatter = _.get(tagProps, 'textFormatter', function (str) {
+      return str;
+    }),
+        tagTextFormatterWrapper = function tagTextFormatterWrapper(str) {
+      return tagTextFormatter(str, tagProps);
+    };
 
-    if (tagText) text(tagText, tagTextFormatter);
+    if (_.isString(tagText)) text(formatText(tagText, tagProps), tagTextFormatterWrapper);
+    console.log(tagText, tagProps);
 
     _.each(tag.children, function (child) {
       render(child);
     });
 
-    tagText = _.get(tag, 'props.textAfter');
-    if (tagText) text(tagText, tagTextFormatter);
+    tagText = _.get(tagProps, 'textAfter');
+    if (_.isString(tagText)) text(formatText(tagText, tagProps), tagTextFormatterWrapper);
+    console.log(tagText, tagProps);
 
     elementClose(tagType);
   }
@@ -5073,6 +5743,8 @@ System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0'], function (_export)
       elementClose = _npmIncrementalDom030.elementClose;
       text = _npmIncrementalDom030.text;
       attributes = _npmIncrementalDom030.attributes;
+    }, function (_libTextJs) {
+      formatText = _libTextJs.formatText;
     }],
     execute: function () {}
   };
@@ -5116,14 +5788,67 @@ System.register('lib/footer.js', ['lib/jdom.js'], function (_export) {
     }
   };
 });
-System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0', 'lib/header.js', 'lib/footer.js'], function (_export) {
+System.register('lib/text.js', [], function (_export) {
   'use strict';
 
-  var bootstrap, patch, header, footer;
+  function interpolateString(str, props) {
+    var toInterpolate = str.match(/{{([^{}]*)}}/g);
+    _.each(toInterpolate, function (string) {
+      str = str.replace(string, _.get(props, string.replace(/{{|}}/g, '').trim()));
+    });
+    return str;
+  }
+
+  function formatText(str, props) {
+    if (_.isUndefined(str)) return null;
+    // TODO - localize here
+    return interpolateString(str, props);
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _export('interpolateString', interpolateString);
+
+      _export('formatText', formatText);
+    }
+  };
+});
+System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0', 'lib/header.js', 'lib/footer.js', 'lib/text.js'], function (_export) {
+  'use strict';
+
+  var bootstrap, patch, Header, footer, formatText;
 
   function appWrapper() {
-    header();
-    footer();
+    var headerTag = {
+      type: 'div',
+      id: 'header',
+      staticPropertyArray: [],
+      props: {
+        onclick: function onclick() {
+          ++header.props.value;
+          header.render();
+        },
+        value: 0,
+        textBefore: '{{ value }} Hello there {{ value }}'
+      },
+      children: [{
+        type: 'h2',
+        id: 'header_title',
+        props: {
+          text: 'Sir testerson'
+        },
+        children: [{
+          type: 'div',
+          id: 'header_subtitle',
+          props: {
+            text: 'Testing'
+          }
+        }]
+      }]
+    },
+        header = new Header(headerTag);
+    header.renderTo(document.body);
   }
 
   return {
@@ -5132,14 +5857,16 @@ System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0',
     }, function (_npmIncrementalDom030) {
       patch = _npmIncrementalDom030.patch;
     }, function (_libHeaderJs) {
-      header = _libHeaderJs.header;
+      Header = _libHeaderJs.Header;
     }, function (_libFooterJs) {
       footer = _libFooterJs.footer;
+    }, function (_libTextJs) {
+      formatText = _libTextJs.formatText;
     }],
     execute: function () {
       bootstrap();
 
-      patch(document.getElementById('app'), appWrapper);
+      appWrapper();
     }
   };
 });
