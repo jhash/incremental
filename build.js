@@ -4974,87 +4974,6 @@ System.registerDynamic("npm:babel-runtime@5.8.34/core-js/object/assign", ["npm:c
   return module.exports;
 });
 
-System.register('lib/component.js', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/object/assign', 'npm:incremental-dom@0.3.0', 'lib/jdom.js'], function (_export) {
-  var _createClass, _classCallCheck, _Object$assign, patch, _render, Component;
-
-  return {
-    setters: [function (_npmBabelRuntime5834HelpersCreateClass) {
-      _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
-    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
-      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-    }, function (_npmBabelRuntime5834CoreJsObjectAssign) {
-      _Object$assign = _npmBabelRuntime5834CoreJsObjectAssign['default'];
-    }, function (_npmIncrementalDom030) {
-      patch = _npmIncrementalDom030.patch;
-    }, function (_libJdomJs) {
-      _render = _libJdomJs.render;
-    }],
-    execute: function () {
-      'use strict';
-
-      Component = (function () {
-        function Component(spec) {
-          _classCallCheck(this, Component);
-
-          if (spec) _Object$assign(this, spec);
-        }
-
-        _createClass(Component, [{
-          key: 'render',
-          value: function render() {
-            if (this.container) {
-              patch(this.container, _render.bind(this, this));
-            } else {
-              _render(this);
-            }
-          }
-        }, {
-          key: 'renderTo',
-          value: function renderTo(container) {
-            this.container = container;
-            this.render();
-          }
-        }]);
-
-        return Component;
-      })();
-
-      _export('Component', Component);
-    }
-  };
-});
-System.register('lib/header.js', ['npm:babel-runtime@5.8.34/helpers/get', 'npm:babel-runtime@5.8.34/helpers/inherits', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'lib/component.js'], function (_export) {
-  var _get, _inherits, _classCallCheck, Component, Header;
-
-  return {
-    setters: [function (_npmBabelRuntime5834HelpersGet) {
-      _get = _npmBabelRuntime5834HelpersGet['default'];
-    }, function (_npmBabelRuntime5834HelpersInherits) {
-      _inherits = _npmBabelRuntime5834HelpersInherits['default'];
-    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
-      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
-    }, function (_libComponentJs) {
-      Component = _libComponentJs.Component;
-    }],
-    execute: function () {
-      'use strict';
-
-      Header = (function (_Component) {
-        _inherits(Header, _Component);
-
-        function Header() {
-          _classCallCheck(this, Header);
-
-          _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
-        }
-
-        return Header;
-      })(Component);
-
-      _export('Header', Header);
-    }
-  };
-});
 System.registerDynamic("npm:process@0.11.2/browser", [], true, function($__require, exports, module) {
   ;
   var global = this,
@@ -5692,16 +5611,48 @@ System.registerDynamic("npm:incremental-dom@0.3.0", ["npm:incremental-dom@0.3.0/
   return module.exports;
 });
 
-System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js'], function (_export) {
+System.register('lib/text.js', [], function (_export) {
   'use strict';
 
-  var elementOpenStart, elementOpenEnd, attr, elementClose, text, attributes, formatText;
+  function interpolateString(str, props) {
+    var toInterpolate = str.match(/{{([^{}]*)}}/g);
+    _.each(toInterpolate, function (string) {
+      str = str.replace(string, _.get(props, string.replace(/{{|}}/g, '').trim()));
+    });
+    return str;
+  }
+
+  function formatText(str, props) {
+    if (_.isUndefined(str)) return null;
+    // TODO - localize here
+    return interpolateString(str, props);
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _export('interpolateString', interpolateString);
+
+      _export('formatText', formatText);
+    }
+  };
+});
+System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js', 'lib/component.js', 'lib/header.js'], function (_export) {
+  'use strict';
+
+  var elementOpenStart, elementOpenEnd, attr, elementClose, text, attributes, formatText, Component, Header;
 
   _export('render', render);
 
   function renderChildComponents(tag) {
     _.each(tag.children, function (child) {
-      render(child);
+      if (_.isFunction(child.render)) {
+        console.log('child render');
+        child.render();
+      } else {
+        console.log('render child');
+        render(child);
+      }
     });
   }
 
@@ -5755,109 +5706,149 @@ System.register('lib/jdom.js', ['npm:incremental-dom@0.3.0', 'lib/text.js'], fun
       attributes = _npmIncrementalDom030.attributes;
     }, function (_libTextJs) {
       formatText = _libTextJs.formatText;
+    }, function (_libComponentJs) {
+      Component = _libComponentJs.Component;
+    }, function (_libHeaderJs) {
+      Header = _libHeaderJs.Header;
     }],
     execute: function () {}
   };
 });
-System.register('lib/footer.js', ['lib/jdom.js'], function (_export) {
-  'use strict';
-
-  var render, value, tag;
-
-  _export('footer', footer);
-
-  function footer() {
-    render(tag);
-  }
+System.register('lib/component.js', ['npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'npm:babel-runtime@5.8.34/core-js/object/assign', 'npm:incremental-dom@0.3.0', 'lib/jdom.js'], function (_export) {
+  var _createClass, _classCallCheck, _Object$assign, patch, _render, Component;
 
   return {
-    setters: [function (_libJdomJs) {
-      render = _libJdomJs.render;
+    setters: [function (_npmBabelRuntime5834HelpersCreateClass) {
+      _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
+    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
+      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
+    }, function (_npmBabelRuntime5834CoreJsObjectAssign) {
+      _Object$assign = _npmBabelRuntime5834CoreJsObjectAssign['default'];
+    }, function (_npmIncrementalDom030) {
+      patch = _npmIncrementalDom030.patch;
+    }, function (_libJdomJs) {
+      _render = _libJdomJs.render;
     }],
     execute: function () {
-      value = 0;
-      tag = {
-        type: 'div',
-        id: 'footer',
-        props: {
-          textBefore: 'Hello there'
-        },
-        children: [{
-          type: 'h2',
-          props: {
-            text: 'Sir testerson'
-          },
-          children: [{
-            type: 'div',
-            props: {
-              text: 'Testing'
+      'use strict';
+
+      Component = (function () {
+        function Component(extensions) {
+          _classCallCheck(this, Component);
+
+          _Object$assign(this, this.getInitialState(), extensions);
+        }
+
+        _createClass(Component, [{
+          key: 'getInitialState',
+          value: function getInitialState() {
+            return {};
+          }
+        }, {
+          key: 'setProps',
+          value: function setProps(newProps) {
+            _Object$assign(this.props, newProps);
+            this.render();
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            if (this.container) {
+              patch(this.container, _render.bind(this, this));
+            } else {
+              _render(this);
             }
-          }]
-        }]
-      };
+          }
+        }, {
+          key: 'renderTo',
+          value: function renderTo(container) {
+            this.container = container;
+            this.render();
+          }
+        }]);
+
+        return Component;
+      })();
+
+      _export('Component', Component);
     }
   };
 });
-System.register('lib/text.js', [], function (_export) {
-  'use strict';
-
-  function interpolateString(str, props) {
-    var toInterpolate = str.match(/{{([^{}]*)}}/g);
-    _.each(toInterpolate, function (string) {
-      str = str.replace(string, _.get(props, string.replace(/{{|}}/g, '').trim()));
-    });
-    return str;
-  }
-
-  function formatText(str, props) {
-    if (_.isUndefined(str)) return null;
-    // TODO - localize here
-    return interpolateString(str, props);
-  }
+System.register('lib/header.js', ['npm:babel-runtime@5.8.34/helpers/get', 'npm:babel-runtime@5.8.34/helpers/inherits', 'npm:babel-runtime@5.8.34/helpers/create-class', 'npm:babel-runtime@5.8.34/helpers/class-call-check', 'lib/component.js'], function (_export) {
+  var _get, _inherits, _createClass, _classCallCheck, Component, Header;
 
   return {
-    setters: [],
+    setters: [function (_npmBabelRuntime5834HelpersGet) {
+      _get = _npmBabelRuntime5834HelpersGet['default'];
+    }, function (_npmBabelRuntime5834HelpersInherits) {
+      _inherits = _npmBabelRuntime5834HelpersInherits['default'];
+    }, function (_npmBabelRuntime5834HelpersCreateClass) {
+      _createClass = _npmBabelRuntime5834HelpersCreateClass['default'];
+    }, function (_npmBabelRuntime5834HelpersClassCallCheck) {
+      _classCallCheck = _npmBabelRuntime5834HelpersClassCallCheck['default'];
+    }, function (_libComponentJs) {
+      Component = _libComponentJs.Component;
+    }],
     execute: function () {
-      _export('interpolateString', interpolateString);
+      'use strict';
 
-      _export('formatText', formatText);
+      Header = (function (_Component) {
+        _inherits(Header, _Component);
+
+        function Header() {
+          _classCallCheck(this, Header);
+
+          _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).apply(this, arguments);
+        }
+
+        _createClass(Header, [{
+          key: 'getInitialState',
+          value: function getInitialState() {
+            var _this = this;
+
+            return {
+              type: 'div',
+              id: 'header',
+              staticPropertyArray: [],
+              props: {
+                onclick: function onclick() {
+                  _this.setProps({ value: _this.props.value + 1 });
+                },
+                value: 0,
+                textBefore: 'Hello there {{ value }}'
+              },
+              children: [new Component({ type: 'h1', id: 'header_title_first', props: { text: 'Bonjour' } }), {
+                type: 'h2',
+                id: 'header_title',
+                props: {
+                  text: 'Sir testerson'
+                },
+                children: [{
+                  type: 'div',
+                  id: 'header_subtitle',
+                  props: {
+                    text: 'Testing'
+                  }
+                }]
+              }]
+            };
+          }
+        }]);
+
+        return Header;
+      })(Component);
+
+      _export('Header', Header);
     }
   };
 });
-System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0', 'lib/header.js', 'lib/footer.js', 'lib/text.js'], function (_export) {
+System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0', 'lib/header.js'], function (_export) {
   'use strict';
 
-  var bootstrap, patch, Header, footer, formatText;
+  var bootstrap, patch, Header;
 
   function appWrapper() {
-    var headerTag = {
-      type: 'div',
-      id: 'header',
-      staticPropertyArray: [],
-      props: {
-        onclick: function onclick() {
-          ++header.props.value;
-          header.render();
-        },
-        value: 0,
-        textBefore: '{{ value }} Hello there {{ value }}'
-      },
-      children: [{
-        type: 'h2',
-        id: 'header_title',
-        props: {
-          text: 'Sir testerson'
-        },
-        children: [{
-          type: 'div',
-          id: 'header_subtitle',
-          props: {
-            text: 'Testing'
-          }
-        }]
-      }]
-    },
-        header = new Header(headerTag);
+    var header = new Header();
     header.renderTo(document.body);
   }
 
@@ -5868,10 +5859,6 @@ System.register('lib/main.js', ['lib/bootstrap.js', 'npm:incremental-dom@0.3.0',
       patch = _npmIncrementalDom030.patch;
     }, function (_libHeaderJs) {
       Header = _libHeaderJs.Header;
-    }, function (_libFooterJs) {
-      footer = _libFooterJs.footer;
-    }, function (_libTextJs) {
-      formatText = _libTextJs.formatText;
     }],
     execute: function () {
       bootstrap();
