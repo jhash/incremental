@@ -22,7 +22,7 @@ gulp.task('build', function() {
     .pipe(gulp.dest('build/'));
 });
 
-gulp.task('watch', function() {
+gulp.task('watch', ['build'], function() {
   watch('lib/**/*.js', batch(function (events, done) {
     gulp.start('build', done);
   }));
