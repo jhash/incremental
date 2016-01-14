@@ -4,14 +4,15 @@ gulp_jspm = require('gulp-jspm'),
 batch = require('gulp-batch'),
 webserver = require('gulp-webserver'),
 watch = require('gulp-watch'),
-defaultTasks = ['build', 'webserver'];
+defaultTasks = ['build', 'webserver'],
+development = process.env.NODE_ENV === 'development';
 
-if (process.env.NODE_ENV === 'development') defaultTasks.push('watch');
+if (development) defaultTasks.push('watch');
 
 gulp.task('webserver', ['build'], function() {
   gulp.src('')
     .pipe(webserver({
-      livereload: true
+      livereload: development
     }));
 });
 
